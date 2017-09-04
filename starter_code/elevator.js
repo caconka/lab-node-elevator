@@ -9,15 +9,17 @@ class Elevator {
   }
 
   start() {
-    const interval = setInterval(() => this.update(), 1000)
+    this.interval = setInterval(() => this.update(), 1000)
   }
 
   stop() { 
-    setTimeout(() => clearInterval(interval), 5000)
+    clearInterval(this.interval)
   }
 
   update() { 
-    if(this.floor < this.requests[0]) {
+    if(this.requests.length == 0) {
+      this.stop()
+    } else if(this.floor < this.requests[0]) {
       this.direction = "up"
       this._passengersLeave(); this._passengersEnter(); this.floorUp()
     } else if(this.floor > this.requests[0]) {
